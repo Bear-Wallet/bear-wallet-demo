@@ -14,24 +14,24 @@ export class WalletSDK {
         `${this.miniAppUrl}/?startapp=${message}&message=${message}`
       );
 
-      window.addEventListener(
-        "message",
-        (event) => {
-          console.log(`event.origin: ${event.origin}`);
-          console.log(event.data);
-          console.log("-------");
+      //   window.addEventListener(
+      //     "message",
+      //     (event) => {
+      //       console.log(`event.origin: ${event.origin}`);
+      //       console.log(event.data);
+      //       console.log("-------");
 
-          if (event.origin !== this.miniAppUrl) return;
-          if (event.data.type === "SIGNATURE_RESULT") {
-            popup?.close();
-            resolve(event.data.signature);
-          }
-        },
-        false
-      );
+      //       if (event.origin !== this.miniAppUrl) return;
+      //       if (event.data.type === "SIGNATURE_RESULT") {
+      //         popup?.close();
+      //         resolve(event.data.signature);
+      //       }
+      //     },
+      //     false
+      //   );
 
-      // Send the message to be signed to the Mini App
-      popup?.postMessage({ type: "SIGN_REQUEST", message }, this.miniAppUrl);
+      //   // Send the message to be signed to the Mini App
+      //   popup?.postMessage({ type: "SIGN_REQUEST", message }, this.miniAppUrl);
     });
   }
 }
