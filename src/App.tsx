@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { WalletSDK } from "./sdk";
 
 function App() {
+  const wallet = new WalletSDK();
+
   const [message, setMessage] = useState("Hi");
   const [signedMsg, setSignedMsg] = useState("");
+
+  // useEffect(() => {
+  //   function messageHandler(event: MessageEvent) {
+  //     if (event.origin === wallet.miniAppUrl) {
+  //       console.log(event.data.signature);
+  //     }
+  //   }
+
+  //   window.addEventListener("message", messageHandler);
+
+  //   return () => {
+  //     window.removeEventListener("message", messageHandler);
+  //   };
+  // }, [wallet.miniAppUrl]);
 
   async function onClick() {
     if (!message) {
       alert("Please enter a message to sign");
       return;
     }
-
-    const wallet = new WalletSDK();
 
     try {
       const result = await wallet.sign(message);
