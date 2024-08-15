@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { getData } from "../helpers/api";
 
 export class WalletSDK {
   public readonly miniAppUrl: string;
@@ -14,40 +15,35 @@ export class WalletSDK {
     return uuidv4();
   }
 
-  async sign(message: string): Promise<string> {
+  openMiniApp(data: { type: string; sessionId: string; data: any }) {
+    window.open(
+      `${this.miniAppUrl}?startapp=${encodeURIComponent(JSON.stringify(data))}`
+    );
+  }
+
+  async signMessage(message: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const sessionId = WalletSDK.generateSessionId();
 
       const data = {
+        type: "SIGN_MSG",
         sessionId,
-        message,
+        data: message,
       };
 
-      // Open the Telegram Mini App
-      window.open(
-        `${this.miniAppUrl}?startapp=${encodeURIComponent(
-          JSON.stringify(data)
-        )}&session=${sessionId}`
-      );
+      this.openMiniApp(data);
 
       // Poll the server for the result
       const checkServer = setInterval(async () => {
         try {
-          const response = await fetch(
-            `${this.backendUrl}/get-signature?sessionId=${sessionId}`
-          );
+          const data = await getData({ sessionId });
 
-          const data = (await response.json()) as {
-            signedMessage: string;
-            sessionId: string;
-          };
-
-          if (data.signedMessage) {
+          if (data.data) {
             clearInterval(checkServer);
-            resolve(data.signedMessage);
+            resolve(data.data);
           }
-        } catch (error) {
-          console.error("Error checking for signature:", error);
+        } catch {
+          console.error("Waiting for signature...");
         }
       }, 1000);
 

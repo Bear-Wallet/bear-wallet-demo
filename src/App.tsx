@@ -15,7 +15,7 @@ function App() {
     }
 
     try {
-      const result = await wallet.sign(message);
+      const result = await wallet.signMessage(message);
       setSignedMsg(result);
     } catch (error) {
       setSignedMsg("Error signing message");
