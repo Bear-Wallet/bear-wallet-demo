@@ -5,8 +5,9 @@ export class WalletSDK {
   private readonly backendUrl: string;
 
   constructor() {
-    this.miniAppUrl = "https://t.me/bear_waller_test_bot/wallet";
-    this.backendUrl = "http://localhost:8000/sdk";
+    // this.miniAppUrl = "https://t.me/bear_waller_test_bot/wallet";
+    this.miniAppUrl = "http://localhost:5174";
+    this.backendUrl = "http://localhost:3000/sdk";
   }
 
   static generateSessionId() {
@@ -54,7 +55,7 @@ export class WalletSDK {
       setTimeout(() => {
         clearInterval(checkServer);
         reject(new Error("Signature request timed out"));
-      }, 300000);
+      }, 1000 * 60);
     });
   }
 }

@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className="max-w-screen">
       <h1>Bear Wallet SDK Demo</h1>
       <div
         style={{
@@ -46,13 +46,13 @@ function App() {
         <div></div>
 
         {signedMsg && (
-          <div>
+          <div className="max-w-full">
             <h2>Signed Message:</h2>
             <p>{signedMsg}</p>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
