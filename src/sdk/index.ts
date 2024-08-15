@@ -1,37 +1,60 @@
+import { v4 as uuidv4 } from "uuid";
+
 export class WalletSDK {
   public readonly miniAppUrl: string;
-  private readonly app = window.Telegram.WebApp;
+  private readonly backendUrl: string;
 
   constructor() {
     this.miniAppUrl = "https://t.me/bear_waller_test_bot/wallet";
+    this.backendUrl = "http://localhost:8000/sdk";
   }
 
-  async sign(message: string) {
-    return new Promise((resolve, reject) => {
-      console.log("wallet.sign");
+  static generateSessionId() {
+    return uuidv4();
+  }
 
-      const popup = window.open(
-        `${this.miniAppUrl}/?startapp=${message}&message=${message}`
+  async sign(message: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const sessionId = WalletSDK.generateSessionId();
+
+      const data = {
+        sessionId,
+        message,
+      };
+
+      // Open the Telegram Mini App
+      window.open(
+        `${this.miniAppUrl}?startapp=${encodeURIComponent(
+          JSON.stringify(data)
+        )}&session=${sessionId}`
       );
 
-      //   window.addEventListener(
-      //     "message",
-      //     (event) => {
-      //       console.log(`event.origin: ${event.origin}`);
-      //       console.log(event.data);
-      //       console.log("-------");
+      // Poll the server for the result
+      const checkServer = setInterval(async () => {
+        try {
+          const response = await fetch(
+            `${this.backendUrl}/get-signature?sessionId=${sessionId}`
+          );
 
-      //       if (event.origin !== this.miniAppUrl) return;
-      //       if (event.data.type === "SIGNATURE_RESULT") {
-      //         popup?.close();
-      //         resolve(event.data.signature);
-      //       }
-      //     },
-      //     false
-      //   );
+          const data = (await response.json()) as {
+            signedMessage: string;
+            sessionId: string;
+          };
 
-      //   // Send the message to be signed to the Mini App
-      //   popup?.postMessage({ type: "SIGN_REQUEST", message }, this.miniAppUrl);
+          if (data.signedMessage) {
+            clearInterval(checkServer);
+            resolve(data.signedMessage);
+          }
+        } catch (error) {
+          console.error("Error checking for signature:", error);
+        }
+      }, 1000);
+
+      // Add a timeout to stop polling after a certain time
+      setTimeout(() => {
+        clearInterval(checkServer);
+        reject(new Error("Signature request timed out"));
+      }, 300000);
     });
   }
 }
