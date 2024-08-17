@@ -15,7 +15,12 @@ function App() {
     }
 
     try {
-      const result = await wallet.signMessage(message);
+      // const result = await wallet.signMessage(message);
+      const result = await wallet.sendTransaction({
+        amount: 10,
+        chainId: 421614,
+        toAddress: "0x17BE8cd0301597c1c701327aeF29917ea744Df4b",
+      });
       setSignedMsg(result);
     } catch (error) {
       setSignedMsg("Error signing message");
