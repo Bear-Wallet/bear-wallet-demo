@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import { WalletSDK } from "./sdk";
 
 function App() {
