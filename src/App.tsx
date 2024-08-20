@@ -148,8 +148,10 @@ function App() {
         </TabsContent>
 
         {result && (
-          <Card>
-            <CardContent className="space-y-2 py-4">{result}</CardContent>
+          <Card className="my-2">
+            <CardContent className="space-y-2 py-4 break-all">
+              {result}
+            </CardContent>
           </Card>
         )}
       </Tabs>
