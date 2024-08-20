@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@bear-wallet/sdk':
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: 1.1.1
+        version: 1.1.1
       '@radix-ui/react-label':
         specifier: ^2.1.0
         version: 2.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -200,8 +200,8 @@ packages:
     resolution: {integrity: sha512-YTnYtra7W9e6/oAZEHj0bJehPRUlLH9/fbpT5LfB0NhQXyALCRkRs3zH9v07IYhkgpqX6Z78FnuccZr/l4Fs4Q==}
     engines: {node: '>=6.9.0'}
 
-  '@bear-wallet/sdk@1.0.2':
-    resolution: {integrity: sha512-r26kMMjaLn46ejd2xXq94MeF9NwmQnsz4VFVUydMByrVBMUh3bKeCbZaTilr7eplob5AOrtE5aTF6Ym4i+FxyQ==}
+  '@bear-wallet/sdk@1.1.1':
+    resolution: {integrity: sha512-Ot7T5JJYbS6+7redxGVG5x9RZLJAvT+EcRhoJ41PT4sKzVy+AaWs0QsvlCXLRHXcLUHKtlGGGbpv/JhQbqqrvw==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -1794,7 +1794,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
-  '@bear-wallet/sdk@1.0.2':
+  '@bear-wallet/sdk@1.1.1':
     dependencies:
       axios: 1.7.4
       uuid: 10.0.0
