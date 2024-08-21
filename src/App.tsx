@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 function App() {
+  // const wallet = new WalletSDK("http://localhost:5173/?hi=hi");
   const wallet = new WalletSDK();
 
   const [result, setResult] = useState("");
@@ -61,7 +62,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center p-2">
       <h1 className="text-4xl font-bold my-8">Bear Wallet SDK Demo</h1>
 
       <Tabs
