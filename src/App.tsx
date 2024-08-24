@@ -18,6 +18,7 @@ function App() {
   const wallet = new WalletSDK();
 
   const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [message, setMessage] = useState("Hello Bear Wallet");
   const [amount, setAmount] = useState(10);
@@ -32,6 +33,8 @@ function App() {
     }
 
     try {
+      setIsLoading(true);
+
       if (type === "connect") {
         const result = await wallet.connect("TESTNET");
         setResult(`Wallet Address - ${result}`);
@@ -58,6 +61,8 @@ function App() {
     } catch (error: any) {
       setResult(error?.message ?? "Error performing operation");
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -72,6 +77,27 @@ function App() {
           setResult("");
         }}
       >
+        <div className="flex flex-row gap-1 my-2 flex-wrap">
+          <a
+            href="https://t.me/bear_waller_test_bot/wallet"
+            target="_blank"
+            className="flex-grow"
+          >
+            <Button variant="outline" className="w-full">
+              Launch Mini App
+            </Button>
+          </a>
+          <a
+            href="https://www.npmjs.com/package/@bear-wallet/sdk"
+            target="_blank"
+            className="flex-grow"
+          >
+            <Button variant="outline" className="w-full">
+              View SDK
+            </Button>
+          </a>
+        </div>
+
         <TabsList className="w-full">
           <TabsTrigger value="connect">Wallet Connect</TabsTrigger>
           <TabsTrigger value="signMsg">Sign Message</TabsTrigger>
@@ -88,7 +114,12 @@ function App() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button onClick={() => handleClick("connect")}>Connect</Button>
+              <Button
+                disabled={isLoading}
+                onClick={() => handleClick("connect")}
+              >
+                Connect
+              </Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -112,7 +143,12 @@ function App() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button onClick={() => handleClick("signMsg")}>Sign</Button>
+              <Button
+                disabled={isLoading}
+                onClick={() => handleClick("signMsg")}
+              >
+                Sign
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -143,7 +179,12 @@ function App() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button onClick={() => handleClick("sendTxn")}>Send</Button>
+              <Button
+                disabled={isLoading}
+                onClick={() => handleClick("sendTxn")}
+              >
+                Send
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -155,6 +196,11 @@ function App() {
             </CardContent>
           </Card>
         )}
+
+        <p className="text-muted-foreground text-sm">
+          *The initial request to the server can be slow due to backend being
+          hosted on free server
+        </p>
       </Tabs>
     </div>
   );
