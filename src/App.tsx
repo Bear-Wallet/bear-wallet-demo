@@ -198,8 +198,9 @@ function App() {
         )}
 
         <p className="text-muted-foreground text-sm">
-          *The initial request to the server can be slow due to backend being
-          hosted on free server
+          *The initial request to the server can be slow due to the backend
+          being hosted on a free server, please refresh or try again if it
+          fails.
         </p>
       </Tabs>
     </div>
